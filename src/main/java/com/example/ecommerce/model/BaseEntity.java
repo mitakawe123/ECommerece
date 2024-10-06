@@ -16,6 +16,13 @@ public abstract class BaseEntity {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Instant updatedAt;
 
+    public BaseEntity() {
+    }
+
+    public BaseEntity(Long id) {
+        this.id = id;
+    }
+
     @PrePersist
     protected void onCreate() {
         Instant now = Instant.now(); // UTC time
@@ -34,6 +41,10 @@ public abstract class BaseEntity {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Instant getUpdatedAt() {

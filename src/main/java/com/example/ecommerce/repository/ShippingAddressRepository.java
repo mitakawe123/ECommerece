@@ -11,7 +11,7 @@ import java.util.List;
 public interface ShippingAddressRepository extends JpaRepository<ShippingAddress, Long> {
     // Custom query to find all shipping addresses by customer ID
     @Query("SELECT sa FROM ShippingAddress sa WHERE sa.customer.id = ?1")
-    List<ShippingAddress> findAllByCustomer_Id(Long customerId);
+    List<ShippingAddress> findAllByCustomerId(Long customerId);
 
     // Custom query to find all shipping addresses in a specific country
     @Query("SELECT sa FROM ShippingAddress sa WHERE sa.country = ?1")

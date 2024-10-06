@@ -1,43 +1,37 @@
-package com.example.ecommerce.model;
-
-import jakarta.persistence.*;
+package com.example.ecommerce.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Entity
-@Table(name = "payments")
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    private Order order;
-
-    @Column(nullable = false)
+public class PaymentDto {
+    private Long id;
+    private Long orderId;
     private BigDecimal amount;
-
-    @Column(name = "payment_date", columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Instant paymentDate;
-
-    @Column(nullable = false)
     private String paymentMethod;
-
-    @Column(nullable = false)
     private String status;
 
-    public Payment() {
-        super();
+    public PaymentDto() {
     }
 
-    public Payment(Long id) {
+    public PaymentDto(Long id) {
         this.id = id;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public BigDecimal getAmount() {
@@ -70,9 +64,5 @@ public class Payment {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 }

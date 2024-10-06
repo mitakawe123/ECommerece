@@ -1,5 +1,7 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.dto.PaymentDto;
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Payment;
 import com.example.ecommerce.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
@@ -37,7 +39,7 @@ public class PaymentService {
 
     public Payment updatePayment(Long id, Payment updatedPayment) {
         var existingPayment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
 
         existingPayment.setAmount(updatedPayment.getAmount());
         existingPayment.setPaymentDate(updatedPayment.getPaymentDate());
@@ -50,4 +52,14 @@ public class PaymentService {
     public void deletePayment(Long id) {
         paymentRepository.deleteById(id);
     }
+
+    public PaymentDto convertToDto(Payment payment) {
+        PaymentDto paymentDto = new PaymentDto();
+        paymentDto.setAmount(payment.getAmount());
+        paymentDto.setPaymentDate(payment.getPaymentDate());
+        paymentDto.setPaymentMethod(payment.getPaymentMethod());
+        paymentDto.setStatus(payment.getStatus());
+        return paymentDto;
+    }
+
 }

@@ -5,9 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -36,9 +34,22 @@ public class Customer extends BaseEntity implements UserDetails {
     @JoinTable(
             name = "customer_roles",
             joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShippingAddress> shippingAddresses = Collections.emptyList();
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = Collections.emptyList();
+
+    public Customer() {
+        super();
+    }
+
+    public Customer(Long id) {
+        super(id);
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -46,6 +57,10 @@ public class Customer extends BaseEntity implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     public void setFullName(String fullName) {

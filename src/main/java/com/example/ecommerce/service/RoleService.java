@@ -1,11 +1,13 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.dto.RoleDto;
 import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Role;
 import com.example.ecommerce.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
@@ -36,5 +38,22 @@ public class RoleService {
 
     public void deleteRole(Long id) {
         roleRepository.deleteById(id);
+    }
+
+    public RoleDto convertToDto(Role role) {
+        RoleDto roleDto = new RoleDto();
+        roleDto.setId(role.getId());
+        roleDto.setName(role.getName());
+        return roleDto;
+    }
+
+    public Role convertToEntity(RoleDto roleDto) {
+        Role role = new Role();
+        role.setName(roleDto.getName());
+        return role;
+    }
+
+    public List<RoleDto> convertToDtoList(List<Role> roles) {
+        return roles.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 }

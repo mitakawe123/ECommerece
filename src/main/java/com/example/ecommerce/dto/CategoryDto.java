@@ -1,22 +1,12 @@
-package com.example.ecommerce.model;
+package com.example.ecommerce.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "categories")
-public class Category extends BaseEntity {
-    @Column(nullable = false)
+public class CategoryDto {
+    @NotBlank(message = "Category name is required")
     private String name;
 
     private String description;
-
-    public Category() {
-        super();
-    }
-
-    public Category(Long id) {
-        super(id);
-    }
 
     public String getName() {
         return name;
@@ -34,3 +24,4 @@ public class Category extends BaseEntity {
         this.description = description;
     }
 }
+

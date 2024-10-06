@@ -1,5 +1,6 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Order;
 import com.example.ecommerce.repository.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class OrderService {
 
     public Order updateOrderStatus(Long id, String orderStatus) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
 
         order.setStatus(orderStatus);
 

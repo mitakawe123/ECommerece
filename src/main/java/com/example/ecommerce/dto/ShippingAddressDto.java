@@ -1,38 +1,20 @@
-package com.example.ecommerce.model;
+package com.example.ecommerce.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "shipping_addresses")
-public class ShippingAddress extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    private Customer customer;
-
-    @Column(nullable = false)
+public class ShippingAddressDto {
+    private Long customerId;
     private String addressLine1;
-
-    @Column(nullable = true)
     private String addressLine2;
-
-    @Column(nullable = false)
     private String city;
-
-    @Column(nullable = false)
     private String state;
-
-    @Column(nullable = false)
     private String postalCode;
-
-    @Column(nullable = false)
     private String country;
 
-    public ShippingAddress() {
-        super();
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public ShippingAddress(Long id) {
-        super(id);
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getAddressLine1() {
@@ -81,13 +63,5 @@ public class ShippingAddress extends BaseEntity {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 }

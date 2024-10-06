@@ -1,5 +1,6 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Customer;
 import com.example.ecommerce.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CustomerService implements UserDetailsService {
@@ -19,8 +18,9 @@ public class CustomerService implements UserDetailsService {
         this.customerRepository = customerRepository;
     }
 
-    public Optional<Customer> findById(Long id) {
-        return customerRepository.findById(id);
+    public Customer findById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
     }
 
     @Override

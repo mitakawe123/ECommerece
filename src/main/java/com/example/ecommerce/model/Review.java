@@ -50,4 +50,24 @@ public class Review {
     public Instant getCreatedAt() {
         return createdAt;
     }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Long getCustomerId() {
+        return customer.getId();
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Long getProductId() {
+        return product.getId();
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

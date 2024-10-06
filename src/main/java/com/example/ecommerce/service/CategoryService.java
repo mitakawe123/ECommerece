@@ -1,5 +1,6 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class CategoryService {
 
     public Category updateCategory(Long id, Category categoryDetails) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
         category.setName(categoryDetails.getName());
         category.setDescription(categoryDetails.getDescription());
         return categoryRepository.save(category);

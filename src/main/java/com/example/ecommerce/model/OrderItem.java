@@ -25,6 +25,10 @@ public class OrderItem {
     @Column(nullable = false)
     private BigDecimal price;
 
+    public Long getId() {
+        return id;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -35,5 +39,25 @@ public class OrderItem {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Long getOrderId() {
+        return order.getId();
+    }
+
+    public Long getProductId() {
+        return product.getId();
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

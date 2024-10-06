@@ -1,5 +1,6 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.dto.ReviewDto;
 import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Review;
 import com.example.ecommerce.repository.ReviewRepository;
@@ -20,14 +21,15 @@ public class ReviewService {
     }
 
     public Review getReviewById(Long id) {
-        return reviewRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Review not found"));
+        return reviewRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
     }
 
     public Review createReview(Review review) {
         return reviewRepository.save(review);
     }
 
-    public Review updateReview(Long id, Review updatedReview) {
+    public Review updateReview(Long id, ReviewDto updatedReview) {
         Review review = getReviewById(id);
         review.setRating(updatedReview.getRating());
         review.setComment(updatedReview.getComment());
@@ -36,5 +38,9 @@ public class ReviewService {
 
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
+    }
+
+    public Review saveReview(Review review) {
+        return reviewRepository.save(review);
     }
 }
