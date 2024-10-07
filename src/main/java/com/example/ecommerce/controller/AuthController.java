@@ -2,10 +2,15 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.dto.LoginCustomerDto;
 import com.example.ecommerce.dto.RegisterCustomerDto;
+import com.example.ecommerce.dto.ResponseDto;
+import com.example.ecommerce.exception.AuthenticationException;
 import com.example.ecommerce.model.Customer;
 import com.example.ecommerce.model.response.LoginResponse;
 import com.example.ecommerce.service.AuthenticationService;
 import com.example.ecommerce.service.JwtService;
+
+import org.hibernate.type.CustomType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +29,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Customer> register(@RequestBody RegisterCustomerDto registerUserDto) {
-        Customer registeredUser = authenticationService.signup(registerUserDto);
-
-        return ResponseEntity.ok(registeredUser);
+    public ResponseEntity<ResponseDto<Customer>> register(@RequestBody RegisterCustomerDto registerUserDto) {
+        try {
+            var registeredUser = authenticationService.signup(registerUserDto);
+            var response = new ResponseDto<Customer>(registeredUser, null);
+            return ResponseEntity.ok(response);
+        } catch (AuthenticationException e) {
+            var response = new ResponseDto<Customer>(null, e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PostMapping("/login")
