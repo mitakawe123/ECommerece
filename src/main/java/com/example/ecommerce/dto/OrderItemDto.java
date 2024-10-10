@@ -1,7 +1,5 @@
 package com.example.ecommerce.dto;
 
-import com.example.ecommerce.model.Order;
-
 import java.math.BigDecimal;
 
 public class OrderItemDto {
